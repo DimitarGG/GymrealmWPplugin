@@ -3,7 +3,7 @@
  * Plugin Name: GymRealm
  * Description: GymRealm for WordPress.
  * Version: 0.0.1
- * Author: pavelsof
+ * Author: GymRealm
  * Author URI: http://gymrealm.com/
  * License: GPL2
  */

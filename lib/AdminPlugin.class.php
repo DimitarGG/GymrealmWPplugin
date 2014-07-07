@@ -89,7 +89,10 @@ class GymRealm_AdminPlugin extends GymRealm_Plugin {
 			__("Gym ID", 'gymrealm'),
 			array(&$this, do_gym_field),
 			GymRealm_AdminPlugin::PAGE_SLUG_SETTINGS,
-			'gymrealm_api_settings_section'
+			'gymrealm_api_settings_section',
+			array(
+				'label_for'	=>	GymRealm_Plugin::OPTION_GYM
+			)
 		);
 		
 	}
@@ -140,6 +143,7 @@ class GymRealm_AdminPlugin extends GymRealm_Plugin {
 		<input 
 			type="text" 
 			name="<?php echo GymRealm_Plugin::OPTION_GYM ?>" 
+			id="<?php echo GymRealm_Plugin::OPTION_GYM ?>" 
 			value="<?php echo $value; ?>" 
 			class="regular-text"
 		/>
