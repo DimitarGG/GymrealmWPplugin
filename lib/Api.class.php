@@ -37,8 +37,15 @@ class GymRealm_Api {
 		
 		$response = wp_remote_request(
 			self::URL .
-			'/Private/GetClientServices?namespace='. $this->namespace .'&json=true'
+			'/Private/GetClientServices' .
+			'?namespace='. $this->namespace .
+			'&json=true' .
+			'&email=' . $email
 		);
+		
+		$services = wp_remote_retrieve_body($response);
+		
+		return $services;
 		
 	}
 	

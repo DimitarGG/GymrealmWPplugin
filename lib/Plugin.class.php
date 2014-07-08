@@ -9,10 +9,14 @@
 
 require_once('Api.class.php');
 
+require_once('ClientServicesWidget.class.php');
+
 
 class GymRealm_Plugin {
 	
 	const OPTION_NAMESPACE = 'gymrealm_namespace';
+	
+	public $api = null;
 	
 	
 	/**
@@ -22,10 +26,10 @@ class GymRealm_Plugin {
 	 */
 	public function __construct() {
 		
-		# internationalisation
 		add_action('plugins_loaded', array(&$this, plugins_loaded));
+		add_action('widgets_init', array(&$this, widgets_init));
 		
-		
+		$this->api = new GymRealm_Api();
 		
 	}
 	
@@ -44,6 +48,20 @@ class GymRealm_Plugin {
 			false,
 			dirname(plugin_basename(__FILE__)) .'/lang/'
 		);
+		
+	}
+	
+	
+	/**
+	 * Loads the plugin's widgets.
+	 * 
+	 * Called by the WordPress action widgets_init.
+	 * 
+	 * @return void
+	 */
+	public function widgets_init() {
+		
+		register_widget('GymRealm_ClientServicesWidget');
 		
 	}
 	
