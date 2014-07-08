@@ -74,7 +74,7 @@ class GymRealm_AdminPlugin extends GymRealm_Plugin {
 		register_setting(
 			'gymrealm',
 			GymRealm_Plugin::OPTION_NAMESPACE,
-			array(&$this, sanitise_gym)
+			array(&$this, sanitise_namespace)
 		);
 		
 		add_settings_section(

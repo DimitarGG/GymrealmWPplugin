@@ -28,6 +28,71 @@ class GymRealm_Api {
 	
 	
 	/**
+	 * GET /Public/GetGyms.
+	 * 
+	 * @return array The namespace's gyms.
+	 */
+	public function get_gyms() {
+		
+		$response = wp_remote_get(
+			self::URL .
+			'/Public/GetGyms' .
+			'?namespace='. $this->namespace .
+			'&json=true'
+		);
+		
+		$gyms = wp_remote_retrieve_body($response);
+		
+		return $gyms;
+		
+	}
+	
+	
+	/**
+	 * GET /Public/GetAreas.
+	 * 
+	 * @param int The gym's ID.
+	 * @return array The gyms's areas.
+	 */
+	public function get_areas($gym_id) {
+		
+		$response = wp_remote_get(
+			self::URL .
+			'/Public/GetAreas' .
+			'?namespace='. $this->namespace .
+			'&json=true' .
+			'&gym=' . $gym_id
+		);
+		
+		$areas = wp_remote_retrieve_body($response);
+		
+		return $areas;
+		
+	}
+	
+	
+	/**
+	 * GET /Public/GetInstructors.
+	 * 
+	 * @return array The namespace's instructors.
+	 */
+	public function get_instructors() {
+		
+		$response = wp_remote_get(
+			self::URL .
+			'/Public/GetInstructors' .
+			'?namespace='. $this->namespace .
+			'&json=true'
+		);
+		
+		$instructors = wp_remote_retrieve_body($response);
+		
+		return $instructors;
+		
+	}
+	
+	
+	/**
 	 * GET /Private/GetClientServices.
 	 * 
 	 * @param string The client's email.
@@ -35,7 +100,7 @@ class GymRealm_Api {
 	 */
 	public function get_client_services($email) {
 		
-		$response = wp_remote_request(
+		$response = wp_remote_get(
 			self::URL .
 			'/Private/GetClientServices' .
 			'?namespace='. $this->namespace .

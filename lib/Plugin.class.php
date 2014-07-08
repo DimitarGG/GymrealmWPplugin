@@ -62,6 +62,7 @@ class GymRealm_Plugin {
 	public function widgets_init() {
 		
 		register_widget('GymRealm_ClientServicesWidget');
+		register_widget('GymRealm_BookScheduleWidget');
 		
 	}
 	
