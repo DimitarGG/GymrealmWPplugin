@@ -68,7 +68,6 @@ class GymRealm_ClientServicesWidget extends WP_Widget {
 		
 		echo $before_widget;
 		
-		echo var_dump($services);
 		
 		echo $after_widget;
 		

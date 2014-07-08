@@ -29,6 +29,7 @@ class GymRealm_Plugin {
 		
 		add_action('plugins_loaded', array(&$this, plugins_loaded));
 		add_action('widgets_init', array(&$this, widgets_init));
+		add_action('wp_enqueue_script', array(&$this, wp_enqueue_script));
 		
 		$this->api = new GymRealm_Api();
 		
@@ -64,6 +65,20 @@ class GymRealm_Plugin {
 		
 		register_widget('GymRealm_BookScheduleWidget');
 		register_widget('GymRealm_ClientServicesWidget');
+		
+	}
+	
+	
+	/**
+	 * Loads the plugin's scripts.
+	 * 
+	 * Called by the WordPress action wp_enqueue_script.
+	 * 
+	 * @return void
+	 */
+	public function wp_enqueue_script() {
+		
+		wp_enqueue_script('jquery');
 		
 	}
 	

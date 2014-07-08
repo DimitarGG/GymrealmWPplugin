@@ -43,7 +43,7 @@ class GymRealm_Api {
 		
 		$gyms = wp_remote_retrieve_body($response);
 		
-		return $gyms;
+		return json_decode($gyms);
 		
 	}
 	
@@ -61,12 +61,12 @@ class GymRealm_Api {
 			'/Public/GetAreas' .
 			'?namespace='. $this->namespace .
 			'&json=true' .
-			'&gym=' . $gym_id
+			'&GymID=' . $gym_id
 		);
 		
 		$areas = wp_remote_retrieve_body($response);
 		
-		return $areas;
+		return json_decode($areas);
 		
 	}
 	
@@ -87,7 +87,7 @@ class GymRealm_Api {
 		
 		$instructors = wp_remote_retrieve_body($response);
 		
-		return $instructors;
+		return json_decode($instructors);
 		
 	}
 	
@@ -110,7 +110,7 @@ class GymRealm_Api {
 		
 		$services = wp_remote_retrieve_body($response);
 		
-		return $services;
+		return json_decode($services);
 		
 	}
 	
