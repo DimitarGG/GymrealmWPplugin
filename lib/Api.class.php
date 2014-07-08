@@ -10,9 +10,9 @@
 
 class GymRealm_Api {
 	
-	const URL = 'http://9ecf2e2fb475475aa8898caf29e0d105.cloudapp.net/Api/Public/';
+	const URL = 'http://9ecf2e2fb475475aa8898caf29e0d105.cloudapp.net/Api';
 	
-	protected $curl = null;
+	protected $namespace = null;
 	
 	
 	/**
@@ -22,7 +22,23 @@ class GymRealm_Api {
 	 */
 	public function __construct() {
 		
-		$this->curl = curl_init(self::URL);
+		$this->namespace = get_option(GymRealm_Plugin::OPTION_NAMESPACE, '');
+		
+	}
+	
+	
+	/**
+	 * GET /Private/GetClientServices.
+	 * 
+	 * @param string The client's email.
+	 * @return array The client's services.
+	 */
+	public function get_client_services($email) {
+		
+		$response = wp_remote_request(
+			self::URL .
+			'/Private/GetClientServices?namespace='. $this->namespace .'&json=true'
+		);
 		
 	}
 	

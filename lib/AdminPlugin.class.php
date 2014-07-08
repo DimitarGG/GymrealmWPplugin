@@ -73,7 +73,7 @@ class GymRealm_AdminPlugin extends GymRealm_Plugin {
 		
 		register_setting(
 			'gymrealm',
-			GymRealm_Plugin::OPTION_GYM,
+			GymRealm_Plugin::OPTION_NAMESPACE,
 			array(&$this, sanitise_gym)
 		);
 		
@@ -85,13 +85,13 @@ class GymRealm_AdminPlugin extends GymRealm_Plugin {
 		);
 		
 		add_settings_field(
-			GymRealm_Plugin::OPTION_GYM,
-			__("Gym ID", 'gymrealm'),
-			array(&$this, do_gym_field),
+			GymRealm_Plugin::OPTION_NAMESPACE,
+			__("Namespace", 'gymrealm'),
+			array(&$this, do_namespace_field),
 			GymRealm_AdminPlugin::PAGE_SLUG_SETTINGS,
 			'gymrealm_api_settings_section',
 			array(
-				'label_for'	=>	GymRealm_Plugin::OPTION_GYM
+				'label_for'	=>	GymRealm_Plugin::OPTION_NAMESPACE
 			)
 		);
 		
@@ -109,18 +109,18 @@ class GymRealm_AdminPlugin extends GymRealm_Plugin {
 	
 	
 	/**
-	 * Checks whether the POSTed gymrealm_gym option is OK.
+	 * Checks whether the POSTed OPTION_NAMESPACE option is OK.
 	 * 
 	 * @param string The POSTed value.
 	 * @return string The sanitised value.
 	 */
-	public function sanitise_gym($input) {
+	public function sanitise_namespace($input) {
 		
 		/*if(empty($input)) {
 			add_settings_error(
-				GymRealm_Plugin::OPTION_GYM,
+				GymRealm_Plugin::OPTION_NAMESPACE,
 				'empty',
-				__("Gym ID cannot be empty!", 'gymrealm'),
+				__("Namespace cannot be empty!", 'gymrealm'),
 				'error'
 			);
 		}*/
@@ -131,19 +131,19 @@ class GymRealm_AdminPlugin extends GymRealm_Plugin {
 	
 	
 	/**
-	 * Echoes the form control for OPTION_GYM.
+	 * Echoes the form control for OPTION_NAMESPACE.
 	 * 
 	 * @return void
 	 */
-	public function do_gym_field() {
+	public function do_namespace_field() {
 		
-		$value = get_option(GymRealm_Plugin::OPTION_GYM, '');
+		$value = get_option(GymRealm_Plugin::OPTION_NAMESPACE, '');
 		
 		?>
 		<input 
 			type="text" 
-			name="<?php echo GymRealm_Plugin::OPTION_GYM ?>" 
-			id="<?php echo GymRealm_Plugin::OPTION_GYM ?>" 
+			name="<?php echo GymRealm_Plugin::OPTION_NAMESPACE ?>" 
+			id="<?php echo GymRealm_Plugin::OPTION_NAMESPACE ?>" 
 			value="<?php echo $value; ?>" 
 			class="regular-text"
 		/>

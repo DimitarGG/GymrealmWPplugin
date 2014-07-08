@@ -12,7 +12,7 @@ require_once('Api.class.php');
 
 class GymRealm_Plugin {
 	
-	const OPTION_GYM = 'gymrealm_gym';
+	const OPTION_NAMESPACE = 'gymrealm_namespace';
 	
 	
 	/**
