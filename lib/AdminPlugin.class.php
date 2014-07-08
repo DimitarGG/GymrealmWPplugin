@@ -29,6 +29,9 @@ class GymRealm_AdminPlugin extends GymRealm_Plugin {
 		add_action('admin_init', array(&$this, admin_init));
 		add_action('admin_menu', array(&$this, admin_menu));
 		
+		add_action('wp_ajax_gymrealm_book_schedule', array(&$this, wp_ajax_gymrealm_book_schedule));
+		add_action('wp_ajax_nopriv_gymrealm_book_schedule', array(&$this, wp_ajax_gymrealm_book_schedule));
+		
 	}
 	
 	
@@ -170,6 +173,56 @@ class GymRealm_AdminPlugin extends GymRealm_Plugin {
 			</form>
 		</div>
 		<?php
+		
+	}
+	
+	
+	/**
+	 * AJAX back-end for the BookScheduleWidget.
+	 * 
+	 * Called by the WordPress actions wp_ajax_* and wp_ajax_nopriv_*.
+	 * 
+	 * @return void
+	 */
+	public function wp_ajax_gymrealm_book_schedule() {
+		
+		global $current_user;
+		get_currentuserinfo();
+		
+		$args = array();
+		
+		$args['area'] = absint($_POST['area']);
+		$args['datetime'] = sanitize_text_field($_POST['datetime']);
+		$args['duration'] = absint($_POST['duration']);
+		$args['gym'] = absint($_POST['gym']);
+		
+		if(isset($_POST['instructor'])) {
+			$args['instructor'] = absint($_POST['instructor']);
+		}
+		if(isset($_POST['comment'])) {
+			$args['comment'] = sanitize_text_field($_POST['comment']);
+		}
+		if(isset($_POST['visit'])) {
+			$args['visit'] = absint($_POST['visit']);
+		}
+		
+		$args['email'] = $current_user->user_email;
+		$args['phone'] = '';
+		
+		if($this->api->post_book_schedule($args)) {
+			$message = array(
+				'status'=>	'success',
+				'text'	=>	__("Your inquiry was received. Thank you.", 'gymrealm')
+			);
+		} else {
+			$message = array(
+				'status'=>	'error',
+				'text'	=>	__("There was an error processing your inquiry. Please contact support.", 'gymrealm')
+			);
+		}
+		
+		echo json_encode($message);
+		die();
 		
 	}
 	

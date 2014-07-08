@@ -73,6 +73,7 @@ class GymRealm_Plugin {
 	 * Loads the plugin's scripts.
 	 * 
 	 * Called by the WordPress action wp_enqueue_script.
+	 * Needed by class BookScheduleWidget.
 	 * 
 	 * @return void
 	 */

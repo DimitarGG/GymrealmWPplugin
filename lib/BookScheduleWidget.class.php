@@ -59,8 +59,7 @@ class GymRealm_BookScheduleWidget extends WP_Widget {
 	 */
 	public function widget($args, $instance) {
 		
-		global $current_user, $gymrealm_plugin;
-		get_currentuserinfo();
+		global $gymrealm_plugin;
 		
 		$gyms = $gymrealm_plugin->api->get_gyms();
 		
@@ -113,11 +112,11 @@ class GymRealm_BookScheduleWidget extends WP_Widget {
 			<label for="gymrealm_comment"><?php _e("Comment", 'gymrealm'); ?></label>
 			<input type="text" name="comment" id="gymrealm_comment" />
 			
-			<label for="gymrealm_time_start"><?php _e("Starting", 'gymrealm'); ?></label>
-			<input type="text" name="time_start" id="gymrealm_time_start" />
+			<label for="gymrealm_datetime"><?php _e("Starting", 'gymrealm'); ?></label>
+			<input type="text" name="datetime" id="gymrealm_datetime" />
 			
-			<label for="gymrealm_time_duration"><?php _e("Duration", 'gymrealm'); ?></label>
-			<input type="text" name="time_duration" id="gymrealm_time_duration" />
+			<label for="gymrealm_duration"><?php _e("Duration", 'gymrealm'); ?></label>
+			<input type="text" name="duration" id="gymrealm_duration" />
 			
 			<button type="submit"><?php _e("Book!", 'gymrealm'); ?></button>
 		</form>

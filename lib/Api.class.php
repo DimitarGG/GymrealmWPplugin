@@ -136,6 +136,47 @@ class GymRealm_Api {
 	}
 	
 	
+	/**
+	 * POST /Private/BookSchedule.
+	 * 
+	 * @param array The arguments needed.
+	 * @return bool Successful/unsuccessful.
+	 */
+	public function post_book_schedule($args) {
+		
+		$post_data = array();
+		$post_data['namespace'] = $this->namespace;
+		
+		$post_data['AreaID'] = $args['area'];
+		$post_data['Datetime'] = $args['datetime'];
+		$post_data['Duration'] = $args['duration'];
+		$post_data['Email'] = $args['email'];
+		$post_data['GymID'] = $args['gym'];
+		$post_data['Telephone'] = $args['phone'];
+		$post_data['Text'] = isset($args['comment']) ? $args['comment'] : "";
+		
+		if(isset($args['instructor'])) $post_data['InstructorID'] = $args['instructor'];
+		if(isset($args['visit'])) $post_data['VisitID'] = $args['visit'];
+		
+		$response = wp_remote_post(
+			self::URL .
+			'/Private/BookSchedule',
+			array(
+				'body'	=>	$post_data
+			)
+		);
+		
+		$code = wp_remote_retrieve_response_code($response);
+		
+		if($code == 200) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	
 }
 
 ?>
