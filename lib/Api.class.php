@@ -93,6 +93,27 @@ class GymRealm_Api {
 	
 	
 	/**
+	 * GET /Public/GetVisits.
+	 * 
+	 * @return array The namespace's visits.
+	 */
+	public function get_visits() {
+		
+		$response = wp_remote_get(
+			self::URL .
+			'/Public/GetVisits' .
+			'?namespace='. $this->namespace .
+			'&json=true'
+		);
+		
+		$visits = wp_remote_retrieve_body($response);
+		
+		return json_decode($visits);
+		
+	}
+	
+	
+	/**
 	 * GET /Private/GetClientServices.
 	 * 
 	 * @param string The client's email.

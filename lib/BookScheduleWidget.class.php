@@ -68,31 +68,63 @@ class GymRealm_BookScheduleWidget extends WP_Widget {
 			$gym->areas = $gymrealm_plugin->api->get_areas($gym->GymID);
 		}
 		
+		$visits = $gymrealm_plugin->api->get_visits();
+		$instructors = $gymrealm_plugin->api->get_instructors();
+		
 		echo $before_widget;
 		
 		?>
 		<form action="" method="post" id="gymrealm_book_schedule_form">
+			<div class="message"></div>
+			
 			<label for="gymrealm_gym"><?php _e("Gym", 'gymrealm'); ?></label>
-			<select id="gymrealm_gym">
-			<?php foreach($gyms as $gym) { ?>
+			<select name="gym" id="gymrealm_gym">
+				<?php foreach($gyms as $gym) { ?>
 				<option value="<?php echo $gym->GymID; ?>"><?php echo $gym->GymName; ?></option>
-			<?php } ?>
+				<?php } ?>
 			</select>
 			
 			<label for="gymrealm_area"><?php _e("Area", 'gymrealm'); ?></label>
-			<select id="gymrealm_area">
-			<?php foreach($gyms as $gym) { ?>
-			<?php foreach($gym->areas as $area) { ?>
+			<select name="area" id="gymrealm_area">
+				<?php foreach($gyms as $gym) { ?>
+				<?php foreach($gym->areas as $area) { ?>
 				<option value="<?php echo $area->AreaID; ?>" data-gym="<?php echo $gym->GymID; ?>">
 					<?php echo $area->Name; ?>
 				</option>
-			<?php } ?>
-			<?php } ?>
+				<?php } ?>
+				<?php } ?>
 			</select>
+			
+			<label for="gymrealm_visits"><?php _e("Visit Type", 'gymrealm'); ?></label>
+			<select name="visit" id="gymrealm_visits">
+				<?php foreach($visits as $visit) { ?>
+				<option value="<?php echo $visit->VisitDefinitionID; ?>"><?php echo $visit->VisitName; ?></option>
+				<?php } ?>
+			</select>
+			
+			<label for="gymrealm_instructor"><?php _e("Instructor", 'gymrealm'); ?></label>
+			<select name="instructor" id="gymrealm_instructor">
+				<option value="0"><?php _e("No preference", 'gymrealm'); ?></option>
+				<?php foreach($instructors as $instructor) { ?>
+				<option value="<?php echo $instructor->InstructorID; ?>"><?php echo $instructor->Name; ?></option>
+				<?php } ?>
+			</select>
+			
+			<label for="gymrealm_comment"><?php _e("Comment", 'gymrealm'); ?></label>
+			<input type="text" name="comment" id="gymrealm_comment" />
+			
+			<label for="gymrealm_time_start"><?php _e("Starting", 'gymrealm'); ?></label>
+			<input type="text" name="time_start" id="gymrealm_time_start" />
+			
+			<label for="gymrealm_time_duration"><?php _e("Duration", 'gymrealm'); ?></label>
+			<input type="text" name="time_duration" id="gymrealm_time_duration" />
+			
+			<button type="submit"><?php _e("Book!", 'gymrealm'); ?></button>
 		</form>
 		<script type="text/javascript">
 			jQuery(document).ready(function($) {
 				var form = $('#gymrealm_book_schedule_form');
+				var message = form.find('.message');
 				var select_gym = form.find('select#gymrealm_gym');
 				var select_area = form.find('select#gymrealm_area');
 				
@@ -105,6 +137,27 @@ class GymRealm_BookScheduleWidget extends WP_Widget {
 					var first_value = select_area.find('option:visible').attr('value');
 					select_area.val(first_value);
 				}
+				
+				form.submit(function() {
+					form.find('button[type=submit]').prop('disabled', true);
+					post_data = form.serializeArray();
+					post_data.push({name: 'action', value: 'gymrealm_book_schedule'});
+					$.post(
+						'<?php echo admin_url('admin-ajax.php'); ?>',
+						post_data,
+						function(message) {
+							if(message.status == 'success') {
+								form.find('.message').html(message.text).show();
+							}
+							else {
+								form.find('.message').html(message.text).show();
+								form.find('button[type=submit]').prop('disabled', false);
+							}
+						},
+						'json'
+					);
+					return false;
+				});
 			});
 		</script>
 		<?php
