@@ -10,6 +10,8 @@
 
 class GymRealm_ClientServicesWidget extends WP_Widget {
 	
+	const TEMPLATE_NAME = 'gymrealm-client-services.php';
+	
 	
 	/**
 	 * Constructor.
@@ -67,15 +69,20 @@ class GymRealm_ClientServicesWidget extends WP_Widget {
 				$current_user->user_email
 			);
 		} catch(Exception $e) {
-			echo $e->getMessage();
+			$services = null;
+			$error_message = $e->getMessage();
 		}
 		
 		echo $before_widget;
 		
-		echo var_dump($services);
+		$theme_template = locate_template(self::TEMPLATE_NAME);
+		if($theme_template) {
+			include($theme_template);
+		} else {
+			include(dirname(dirname(__FILE__)) .'/tpl/'. self::TEMPLATE_NAME);
+		}
 		
 		echo $after_widget;
-		
 	}
 	
 }
