@@ -62,9 +62,13 @@ class GymRealm_ClientServicesWidget extends WP_Widget {
 		global $current_user, $gymrealm_plugin;
 		get_currentuserinfo();
 		
-		$services = $gymrealm_plugin->api->get_client_services(
-			$current_user->user_email
-		);
+		try {
+			$services = $gymrealm_plugin->api->get_client_services(
+				$current_user->user_email
+			);
+		} catch(Exception $e) {
+			echo $e->getMessage();
+		}
 		
 		echo $before_widget;
 		

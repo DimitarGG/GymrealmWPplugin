@@ -2,6 +2,8 @@
 /**
  * Definition of the GymRealm_Api class.
  * 
+ * All the API methods can throw an error, so you better catch them!
+ * 
  * @author pavelsof
  * @package GymRealm
  * @since 0.0.1
@@ -41,9 +43,12 @@ class GymRealm_Api {
 			'&json=true'
 		);
 		
-		$gyms = wp_remote_retrieve_body($response);
-		
-		return json_decode($gyms);
+		if(wp_remote_retrieve_response_code($response) == 200) {
+			$gyms = wp_remote_retrieve_body($response);
+			return json_decode($gyms);
+		} else {
+			throw new Exception(__("You are not connected to GymRealm API.", 'gymrealm'));
+		}
 		
 	}
 	
@@ -64,9 +69,12 @@ class GymRealm_Api {
 			'&GymID=' . $gym_id
 		);
 		
-		$areas = wp_remote_retrieve_body($response);
-		
-		return json_decode($areas);
+		if(wp_remote_retrieve_response_code($response) == 200) {
+			$areas = wp_remote_retrieve_body($response);
+			return json_decode($areas);
+		} else {
+			throw new Exception(__("You are not connected to GymRealm API.", 'gymrealm'));
+		}
 		
 	}
 	
@@ -85,9 +93,12 @@ class GymRealm_Api {
 			'&json=true'
 		);
 		
-		$instructors = wp_remote_retrieve_body($response);
-		
-		return json_decode($instructors);
+		if(wp_remote_retrieve_response_code($response) == 200) {
+			$instructors = wp_remote_retrieve_body($response);
+			return json_decode($instructors);
+		} else {
+			throw new Exception(__("You are not connected to GymRealm API.", 'gymrealm'));
+		}
 		
 	}
 	
@@ -106,9 +117,12 @@ class GymRealm_Api {
 			'&json=true'
 		);
 		
-		$visits = wp_remote_retrieve_body($response);
-		
-		return json_decode($visits);
+		if(wp_remote_retrieve_response_code($response) == 200) {
+			$visits = wp_remote_retrieve_body($response);
+			return json_decode($visits);
+		} else {
+			throw new Exception(__("You are not connected to GymRealm API.", 'gymrealm'));
+		}
 		
 	}
 	
@@ -129,9 +143,12 @@ class GymRealm_Api {
 			'&email=' . $email
 		);
 		
-		$services = wp_remote_retrieve_body($response);
-		
-		return json_decode($services);
+		if(wp_remote_retrieve_response_code($response) == 200) {
+			$services = wp_remote_retrieve_body($response);
+			return json_decode($services);
+		} else {
+			throw new Exception(__("No such user.", 'gymrealm'));
+		}
 		
 	}
 	
