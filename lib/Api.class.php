@@ -147,7 +147,9 @@ class GymRealm_Api {
 			$services = wp_remote_retrieve_body($response);
 			return json_decode($services);
 		} else {
-			throw new Exception(__("No such user.", 'gymrealm'));
+			$text  = "You have no active services or you are registered with another email in Gym Realm Manager. ";
+			$text .= "For any enquiries please contact PHG team. Thank you!";
+			throw new Exception(__($text, 'gymrealm'));
 		}
 		
 	}
