@@ -12,7 +12,8 @@
 
 class GymRealm_Api {
 	
-	const URL = 'http://9ecf2e2fb475475aa8898caf29e0d105.cloudapp.net/Api';
+	//const URL = 'http://9ecf2e2fb475475aa8898caf29e0d105.cloudapp.net/Api';
+	const URL = 'http://gymrealmmanager.cloudapp.net/Api';
 	
 	protected $namespace = null;
 	
