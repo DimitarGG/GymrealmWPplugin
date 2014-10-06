@@ -29,6 +29,9 @@ class GymRealm_AdminPlugin extends GymRealm_Plugin {
 		add_action('admin_init', array(&$this, admin_init));
 		add_action('admin_menu', array(&$this, admin_menu));
 		
+		add_action('wp_ajax_gymrealm_add_client', array(&$this, wp_ajax_gymrealm_add_client));
+		add_action('wp_ajax_nopriv_gymrealm_add_client', array(&$this, wp_ajax_gymrealm_add_client));
+		
 		add_action('wp_ajax_gymrealm_book_schedule', array(&$this, wp_ajax_gymrealm_book_schedule));
 		add_action('wp_ajax_nopriv_gymrealm_book_schedule', array(&$this, wp_ajax_gymrealm_book_schedule));
 		
@@ -173,6 +176,41 @@ class GymRealm_AdminPlugin extends GymRealm_Plugin {
 			</form>
 		</div>
 		<?php
+		
+	}
+	
+	
+	/**
+	 * AJAX back-end for the AddClientWidget.
+	 * 
+	 * Called by the WordPress actions wp_ajax_* and wp_ajax_nopriv_*.
+	 * 
+	 * @return void
+	 */
+	public function wp_ajax_gymrealm_add_client() {
+		
+		$args = array();
+		
+		$args['name'] = sanitize_text_field($_POST['name']);
+		$args['email'] = sanitize_email($_POST['email']);
+		$args['phone'] = sanitize_text_field($_POST['phone']);
+		$args['company'] = sanitize_text_field($_POST['company']);
+		$args['location'] = sanitize_text_field($_POST['location']);
+		
+		if($this->api->post_add_client($args)) {
+			$message = array(
+				'status'=>	'success',
+				'text'	=>	__("Your registration was received. Thank you.", 'gymrealm')
+			);
+		} else {
+			$message = array(
+				'status'=>	'error',
+				'text'	=>	__("There was an error processing your inquiry. Please contact support.", 'gymrealm')
+			);
+		}
+		
+		echo json_encode($message);
+		die();
 		
 	}
 	

@@ -9,6 +9,7 @@
 
 require_once('Api.class.php');
 
+require_once('AddClientWidget.class.php');
 require_once('BookScheduleWidget.class.php');
 require_once('ClientServicesWidget.class.php');
 
@@ -63,6 +64,7 @@ class GymRealm_Plugin {
 	 */
 	public function widgets_init() {
 		
+		register_widget('GymRealm_AddClientWidget');
 		register_widget('GymRealm_BookScheduleWidget');
 		register_widget('GymRealm_ClientServicesWidget');
 		

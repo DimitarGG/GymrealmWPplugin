@@ -197,6 +197,45 @@ class GymRealm_Api {
 	}
 	
 	
+	/**
+	 * POST /Private/AddClient.
+	 * 
+	 * @param array The arguments needed.
+	 * @return bool Successful/unsuccessful.
+	 */
+	public function post_add_client($args) {
+		
+		$post_data = array();
+		$post_data['namespace'] = $this->namespace;
+		
+		$post_data['Name'] = $args['name'] ." WEB";
+		$post_data['Email'] = $args['email'];
+		$post_data['Contact'] = $args['company'];
+		$post_data['Telephone'] = $args['phone'];
+		$post_data['Address'] = $args['location'];
+		$post_data['Birthdate'] = "";
+		$post_data['Male'] = "";
+		
+		$response = wp_remote_post(
+			self::URL .
+			'/Private/AddClient',
+			array(
+				'body'	=>	$post_data
+			)
+		);
+		
+		$code = wp_remote_retrieve_response_code($response);
+		die(var_dump($response));
+		
+		if($code == 200) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	
 }
 
 ?>
