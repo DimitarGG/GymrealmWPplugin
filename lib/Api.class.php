@@ -213,7 +213,7 @@ class GymRealm_Api {
 		$post_data['Contact'] = $args['company'];
 		$post_data['Telephone'] = $args['phone'];
 		$post_data['Address'] = $args['location'];
-		$post_data['Birthdate'] = "";
+		$post_data['Birthdate'] = "1/1/1753 12:00:00 AM";
 		$post_data['Male'] = "";
 		
 		$response = wp_remote_post(
@@ -225,7 +225,6 @@ class GymRealm_Api {
 		);
 		
 		$code = wp_remote_retrieve_response_code($response);
-		die(var_dump($response));
 		
 		if($code == 200) {
 			return true;

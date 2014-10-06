@@ -11,10 +11,10 @@
 	<div class="message"></div>
 	
 	<label for="gymrealm_name"><?php _e("Name", 'gymrealm'); ?></label>
-	<input type="text" name="name" id="gymrealm_name" />
+	<input type="text" name="name" id="gymrealm_name" required />
 	
 	<label for="gymrealm_email"><?php _e("Email", 'gymrealm'); ?></label>
-	<input type="email" name="email" id="gymrealm_email" />
+	<input type="email" name="email" id="gymrealm_email" required />
 	
 	<label for="gymrealm_phone"><?php _e("Phone", 'gymrealm'); ?></label>
 	<input type="text" name="phone" id="gymrealm_phone" />
