@@ -111,7 +111,7 @@ class GymRealm_Api {
 	 */
 	public function get_visits() {
 		
-		$response = wp_remote_get(
+		$response = wp_remote_post(
 			self::URL .
 			'/Public/GetVisits' .
 			'?namespace='. $this->namespace .
@@ -121,6 +121,43 @@ class GymRealm_Api {
 		if(wp_remote_retrieve_response_code($response) == 200) {
 			$visits = wp_remote_retrieve_body($response);
 			return json_decode($visits);
+		} else {
+			throw new Exception(__("You are not connected to GymRealm API.", 'gymrealm'));
+		}
+		
+	}
+	
+	
+	/**
+	 * POST /Public/GetSchedule.
+	 * 
+	 * Sample usage:
+	 * $from = mktime(0, 0, 0, date('n'), date('j') - date('N') + 1);
+	 * $to = mktime(0, 0, 0, date('n'), date('j') - date('N') + 7);
+	 * $result = get_schedule($from, $to);
+	 * 
+	 * @param timestamp Starting from 00:00 of that day.
+	 * @param timestamp Lasting until 23:59 of that day.
+	 * @return array The gym's schedule.
+	 */
+	public function get_schedule($from, $to) {
+		
+		$post_data = array();
+		$post_data['namespace'] = $this->namespace;
+		$post_data['datestart'] = date("n/j/Y", $from) ." 12:00:00 AM";
+		$post_data['dateend'] = date("n/j/Y", $to) ." 11:59:59 PM";
+		
+		$response = wp_remote_post(
+			self::URL .
+			'/Public/GetSchedule',
+			array(
+				'body'	=>	$post_data
+			)
+		);
+		
+		if(wp_remote_retrieve_response_code($response) == 200) {
+			$schedule = wp_remote_retrieve_body($response);
+			return json_decode($schedule);
 		} else {
 			throw new Exception(__("You are not connected to GymRealm API.", 'gymrealm'));
 		}
